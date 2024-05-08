@@ -8,10 +8,7 @@ import * as argon2 from "argon2";
 import { JWT_SECRET } from "../config";
 import userAuth from "../middlewares/userAuth";
 
-
-
-
-
+//Zod Validation (for User object)
 const userSchema = z.object({
     firstName: z.string().max(50, {message:'is very loooooong'}).optional(),
     lastName: z.string().max(50, {message:'is very loooooong'}).optional(),
@@ -19,12 +16,15 @@ const userSchema = z.object({
     password: z.string().min(8, { message: 'is Too short' }),
 })
 
+//signup endpoint
 router.post("/signup", async(req, res) => {
     const parsedData = userSchema.safeParse(req.body);
 
     if (!parsedData.success){
         res.status(400).json({error:parsedData.error})
     }
+
+    //Argon2 for password hashing instead of bycrypt
     const hashedPass = await argon2.hash(req.body.password);
 
     try{
@@ -37,22 +37,23 @@ router.post("/signup", async(req, res) => {
         }
     })
     const userId = user.id
+    // signing the userId with Json Web Token and returning it
     const jwttoken = jwt.sign({userId}, JWT_SECRET)
+
     res.json({
         msg:"User Created Successfully",
         token:jwttoken
     })
 }catch(error){
     console.log(error)
-    res.json({
+    res.status(400).json({
         msg:"Unable to create user",
         error:error
     })
 }
 })
 
-
-
+//signin endpoint
 router.post("/signin" ,async (req, res) => {
     const parsed = userSchema.safeParse(req.body)
     console.log(parsed)
@@ -100,13 +101,62 @@ router.post("/signin" ,async (req, res) => {
     
 })
 
-// router.post("/sign", async (req, res) => {
-    
-// })
+//insert todo endpoint
+router.post("/add-todo",userAuth, async(req:any , res) => {
 
-// router.post("/signin", async (req, res) => {
-    
-// })
+    const userId = req.userId
+    try{
+        const todo = await prisma.todos.create({
+            data:{
+                userId,
+                title:req.body.title,
+                description:req.body.description
+            }
+        })
+
+        console.log(todo)
+        res.json({
+            msg:"Todo Added Successfully",
+            todo:todo
+        })
+        
+    }catch(err){
+        res.json({
+            msg:"Unable to add Todo",
+            error:err
+        })
+    }
+})
+
+//get all todos endpoint with user info (join used)
+router.get("/mytodos", userAuth, async(req:any , res)=>{
+    const userId = req.userId
+    try{
+        const gettodoswithinfo = await prisma.user.findUnique({
+            where:{
+                id:userId
+            },
+            select:{
+                firstName:true,
+                lastName:true,
+                todos:true
+            }
+        })
+        if(gettodoswithinfo){
+            res.json({
+                firstName:gettodoswithinfo.firstName,
+                lastName:gettodoswithinfo.lastName,
+                todo:gettodoswithinfo.todos
+            })
+        }
+    }catch(err){
+        res.status(400).json({
+            msg:"Something went Wrong",
+            error:err
+        })
+    }
+
+})
 
 
 

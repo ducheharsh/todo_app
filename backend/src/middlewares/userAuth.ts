@@ -2,10 +2,8 @@ import express, { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { JWT_SECRET } from "../config";
 
-
 interface JwtType extends JwtPayload{
     userId:string  
-
 }
 
 export default function userAuth(req:any, res:any, next:any){
