@@ -7,18 +7,10 @@ import { useRecoilState } from "recoil"
 import { checkAtom } from "../store/atoms/atoms"
 
 
-
-
-
 export function Todos(){
     
     const {todos} = useTodos()
-   
-    
-  
-
-    return <div >
-        
+    return <div >  
         {
 
         todos?.length > 0 ?
@@ -26,8 +18,6 @@ export function Todos(){
         : <div>No Todos Found</div>
         
         }
-
-
     </div>
 }
 
@@ -42,7 +32,7 @@ interface Props{
 
 function TodoCard({title, description, createdAt, done, id}:Props){
     const [checkState, setCheckState] = useRecoilState(checkAtom)
-    return <div className="bg-white mt-4 p-4 rounded-md shadow-2xl">
+    return <div className="bg-white mt-4 p-4 rounded-md shadow-2xl w-[390px]">
     <div className="flex flex-col pb-2">
     
         <div className="flex justify-between"><span className="font-light text-md">Title</span><CheckboxChecked checked={done} onClick={()=>{

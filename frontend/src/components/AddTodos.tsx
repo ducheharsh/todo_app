@@ -4,12 +4,15 @@ import { InputComp } from "./InputComp";
 import { SubHeading } from "./SubHeading";
 import { Button } from "./Button";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { checkAtom } from "../store/atoms/atoms";
 
 
 export function AddTodo(){
 
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
+    const [checkState, setCheckState] = useRecoilState(checkAtom)
     return <div>
         <div>
         <Heading title="Add Todo"/>
@@ -33,6 +36,8 @@ export function AddTodo(){
             <div>
                 <Button title="Add Todo" onClick={()=>{
                     if (!(title === "" || description === "")){
+                    setCheckState(!checkState)
+                
                     axios.post("http://localhost:3000/api/v1/user/add-todo",{title, description},{
                         headers:{
                             Authorization:localStorage.getItem("token")

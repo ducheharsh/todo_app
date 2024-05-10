@@ -36,12 +36,12 @@ export function MyTodos(){
    return<div>
     <div className="shadow-xl shadow-black z-20"><Appbar firstName={firstName}/></div> 
    <div className="z-10">
-    <div className=" bg-[#336a71] h-screen grid grid-cols-3">
+    <div className="flex flex-wrap bg-[#336a71] h-screen grid grid-cols-3">
        <div className="m-4 p-8 rounded-md bg-white h-fit col-span-1">
             <AddTodo/>
         </div>
 
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap w-full">
             <Todos/>
         </div>
     </div>
