@@ -7,7 +7,6 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = require("../config");
 function userAuth(req, res, next) {
     const pretoken = req.headers.authorization;
-    console.log(pretoken);
     if (!pretoken) {
         return res.status(401).json({ message: "No token found" });
     }

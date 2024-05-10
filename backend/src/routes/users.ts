@@ -7,6 +7,7 @@ import z, { any } from 'zod'
 import * as argon2 from "argon2";
 import { JWT_SECRET } from "../config";
 import userAuth from "../middlewares/userAuth";
+import e from "express";
 
 //Zod Validation (for User object)
 const userSchema = z.object({
@@ -61,10 +62,11 @@ router.post("/signin" ,async (req, res) => {
         res.status(400).json({
             error:parsed.error
         })
+        return
     }
     console.log(req.body.username)
 
-    try{
+   
     const user = await prisma.user.findUnique({
         where:{
             email:req.body.username
@@ -80,7 +82,7 @@ router.post("/signin" ,async (req, res) => {
                 })
                 
             } else {
-                res.json({
+                res.status(400).json({
                     msg:"Invalid Password"
                 })
             }
@@ -91,11 +93,9 @@ router.post("/signin" ,async (req, res) => {
             })
           }
 }
-}catch(error){
-    console.log(error)
-    res.json({
-        msg:"User not found",
-        error:error
+else{
+    res.status(400).json({
+        msg:"User not found"
     })
 }
     
@@ -158,6 +158,27 @@ router.get("/mytodos", userAuth, async(req:any , res)=>{
 
 })
 
+router.put("/mytodos/:id", userAuth, async(req:any , res)=>{
+    const todoId = req.params.id
+    try{
+        const updatetodo = await prisma.todos.update({
+            where:{
+                id:parseInt(todoId)
+            },
+            data:{
+                done:req.body.done
+            }
+        })
+
+        res.json({
+            msg:"Todo Updated Successfully",
+})
+    }catch(err){
+        res.status(400).json({
+            msg:"Something went Wrong",
+            error:err
+        })
+    }})
 
 
 export default router

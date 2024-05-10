@@ -92,42 +92,39 @@ router.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.status(400).json({
             error: parsed.error
         });
+        return;
     }
     console.log(req.body.username);
-    try {
-        const user = yield prisma.user.findUnique({
-            where: {
-                email: req.body.username
-            }
-        });
-        console.log(user);
-        if (user) {
-            try {
-                if (yield argon2.verify(user.password, req.body.password)) {
-                    const jwttoken = jsonwebtoken_1.default.sign({ userId: user.id }, config_1.JWT_SECRET);
-                    res.json({
-                        token: jwttoken
-                    });
-                }
-                else {
-                    res.json({
-                        msg: "Invalid Password"
-                    });
-                }
-            }
-            catch (err) {
+    const user = yield prisma.user.findUnique({
+        where: {
+            email: req.body.username
+        }
+    });
+    console.log(user);
+    if (user) {
+        try {
+            if (yield argon2.verify(user.password, req.body.password)) {
+                const jwttoken = jsonwebtoken_1.default.sign({ userId: user.id }, config_1.JWT_SECRET);
                 res.json({
-                    msg: "Invalid Password",
-                    err: err
+                    token: jwttoken
+                });
+            }
+            else {
+                res.status(400).json({
+                    msg: "Invalid Password"
                 });
             }
         }
+        catch (err) {
+            res.json({
+                msg: "Invalid Password",
+                err: err
+            });
+        }
     }
-    catch (error) {
-        console.log(error);
-        res.json({
-            msg: "User not found",
-            error: error
+    else {
+        res.status(400).json({
+            msg: "User not found"
         });
     }
 }));
@@ -176,6 +173,28 @@ router.get("/mytodos", userAuth_1.default, (req, res) => __awaiter(void 0, void 
                 todo: gettodoswithinfo.todos
             });
         }
+    }
+    catch (err) {
+        res.status(400).json({
+            msg: "Something went Wrong",
+            error: err
+        });
+    }
+}));
+router.put("/mytodos/:id", userAuth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const todoId = req.params.id;
+    try {
+        const updatetodo = yield prisma.todos.update({
+            where: {
+                id: parseInt(todoId)
+            },
+            data: {
+                done: req.body.done
+            }
+        });
+        res.json({
+            msg: "Todo Updated Successfully",
+        });
     }
     catch (err) {
         res.status(400).json({

@@ -2,11 +2,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { SignUp } from "./pages/signup"
 import { SignIn } from "./pages/signin"
 import { MyTodos } from "./pages/mytodos"
+import { RecoilRoot } from "recoil"
 
 
 function App() {
 
   return (
+    <RecoilRoot>
     <BrowserRouter>
     <Routes>
       <Route path='/signin' element={<SignIn/>}/>
@@ -14,6 +16,7 @@ function App() {
       <Route path='/mytodos' element={<MyTodos/>}/>
     </Routes>
     </BrowserRouter>
+    </RecoilRoot>
   )
 }
 

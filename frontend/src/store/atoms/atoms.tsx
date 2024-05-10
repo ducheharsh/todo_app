@@ -2,9 +2,9 @@
 import { useEffect } from "react"
 import {AtomEffect, atom, selector, useSetRecoilState} from "recoil"
 
- const todosAtom = atom({
+ const checkAtom = atom({
     key:"todosAtom",
-    default:[]
+    default:false
 })
 
  const infoAtom = atom({
@@ -13,4 +13,4 @@ import {AtomEffect, atom, selector, useSetRecoilState} from "recoil"
     }
 })
 
-export{ todosAtom, infoAtom}
+export{ checkAtom}

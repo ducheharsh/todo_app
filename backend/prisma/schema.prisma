@@ -11,7 +11,7 @@ generator client {
 datasource db {
   provider = "postgresql"
 
-  url = "//YOUR_DATABASE_URL"
+  url = "YOUR_DATABASE_URL"
 }
 
 model User {
@@ -21,6 +21,7 @@ model User {
   email String @unique
   password String
   todos Todos[]
+  createdAt DateTime  @default(now()) @db.Timestamptz(3)
 }
 
 model Todos {
@@ -30,7 +31,10 @@ model Todos {
   description String?
   done Boolean? @default(false)
   user User @relation(fields: [userId], references: [id])
+  createdAt DateTime  @default(now()) @db.Timestamptz(3)
 }
+
+
 
 
 

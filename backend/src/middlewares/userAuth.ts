@@ -8,11 +8,13 @@ interface JwtType extends JwtPayload{
 
 export default function userAuth(req:any, res:any, next:any){
     const pretoken = req.headers.authorization;
-    console.log(pretoken)
+
     if(!pretoken){
         return res.status(401).json({message:"No token found"})
     }
+
     const token = pretoken.split(" ")[1]
+
     const decodedToken = jwt.verify(token, JWT_SECRET) as JwtType
 
     if(!decodedToken.userId){
