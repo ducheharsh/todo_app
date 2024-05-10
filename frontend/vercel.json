@@ -1,8 +1,8 @@
 {
     "rewrites": [
       {
-        "src": "/(.*)",
-        "dest": "/index.html"
+        "source": "/(?!_next|static)(.*)",
+        "destination": "/index.html"
       }
     ]
   }
