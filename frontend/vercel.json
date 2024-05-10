@@ -1,8 +1,7 @@
 {
     "routes": [
       { "src": "/", "dest": "/" },
-      { "src": "/signin", "dest": "/src/pages/signin" },
-      { "src": "/signup", "dest": "/src/pages/signup" }
-
+      { "src": "/signin", "dest": "./src/pages/signin" },
+      { "src": "/signup", "dest": "./src/pages/signup" }
     ]
   }
