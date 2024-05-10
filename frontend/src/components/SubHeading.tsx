@@ -1,5 +1,5 @@
 
-import React, {PropsWithChildren} from 'react';
+import {PropsWithChildren} from 'react';
 
 export interface Props {
     title: string;

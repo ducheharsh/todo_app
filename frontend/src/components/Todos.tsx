@@ -1,7 +1,7 @@
 
 import { CheckboxChecked } from "./Checkbox"
 import axios from "axios"
-import { useEffect, useState } from "react"
+
 import { useTodos } from "../pages/mytodos"
 import { useRecoilState } from "recoil"
 import { checkAtom } from "../store/atoms/atoms"
@@ -12,7 +12,7 @@ import { checkAtom } from "../store/atoms/atoms"
 
 export function Todos(){
     
-    const {todos, firstName, lastName} = useTodos()
+    const {todos} = useTodos()
    
     
   

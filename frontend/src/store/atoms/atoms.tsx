@@ -1,16 +1,12 @@
 
-import { useEffect } from "react"
-import {AtomEffect, atom, selector, useSetRecoilState} from "recoil"
+
+import {atom} from "recoil"
 
  const checkAtom = atom({
     key:"todosAtom",
     default:false
 })
 
- const infoAtom = atom({
-    key:"infoAtom",
-    default:{
-    }
-})
+
 
 export{ checkAtom}

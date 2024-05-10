@@ -5,7 +5,7 @@ import { Todos } from "../components/Todos";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { checkAtom } from "../store/atoms/atoms";
-import { SubHeading } from "../components/SubHeading";
+
 
 export const useTodos = ()=>{
     const [todos, setTodos] = useState([])
