@@ -1,8 +1,8 @@
 {
-    "cleanUrls": true,
-    "rewrites": [
-      { "source": "/_next/(.*)", "destination": "/_next/$1" },
-      { "source": "/static/(.*)", "destination": "/static/$1" },
-      { "source": "/(.*)", "destination": "./index.html" }
+    "routes": [
+      { "src": "/", "dest": "/" },
+      { "src": "/signin", "dest": "/src/pages/signin" },
+      { "src": "/signup", "dest": "/src/pages/signup" }
+
     ]
   }
