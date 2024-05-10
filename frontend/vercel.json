@@ -1,8 +1,8 @@
 {
-    "rewrites": [
-      {
-        "source": "/(?!_next|static)(.*)",
-        "destination": "/index.html"
-      }
+    "cleanUrls": true,
+    "routes": [
+      { "src": "/_next/(.*)", "dest": "/_next/$1", "continue": true },
+      { "src": "/static/(.*)", "dest": "/static/$1", "continue": true },
+      { "src": "/(.*)", "dest": "/index.html" }
     ]
   }
