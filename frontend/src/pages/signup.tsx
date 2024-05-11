@@ -49,12 +49,12 @@ export function SignUp(){
             }} label="Password" placeholder="shhhhhhh" type="password"/>
         </div>
         
-        <div>
+        <div className="flex items-center justify-center pb-1">
         <span>Already Registered?</span><span> </span><a onClick={()=>{
             navigate("/signin")
         }} className="text-[#ff914d] font-bold">  Log in</a>
         </div>
-        
+
         {/* Button & Input Issues Div  */}
         <div className="font-pixels flex justify-center">
             <Button onClick={async()=>{
