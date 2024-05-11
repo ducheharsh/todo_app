@@ -48,11 +48,13 @@ export function SignUp(){
                 setPassword(e.target.value)
             }} label="Password" placeholder="shhhhhhh" type="password"/>
         </div>
-
-        <span>Already Registered?</span><span>_</span><a onClick={()=>{
+        
+        <div>
+        <span>Already Registered?</span><span> </span><a onClick={()=>{
             navigate("/signin")
         }} className="text-[#ff914d] font-bold">  Log in</a>
-
+        </div>
+        
         {/* Button & Input Issues Div  */}
         <div className="font-pixels flex justify-center">
             <Button onClick={async()=>{
